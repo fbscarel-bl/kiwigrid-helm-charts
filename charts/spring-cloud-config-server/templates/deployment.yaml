@@ -60,6 +60,7 @@ spec:
           {{- end}}
           - name: SPRING_CLOUD_CONFIG_SERVER_GIT_SEARCHPATHS
             value: "{{ .Values.config.gitSearchpath }}"
+          {{- if and .Values.secrets.enabled .Values.secrets.gitUsername }}
           - name: SPRING_CLOUD_CONFIG_SERVER_GIT_USERNAME
             valueFrom:
               secretKeyRef:
@@ -70,6 +71,7 @@ spec:
               secretKeyRef:
                 name: "{{ include "spring-cloud-config-server.fullname" . }}"
                 key: "gitPassword"
+          {{- end}}
           {{- if .Values.extraEnv }}
             {{- toYaml .Values.extraEnv | nindent 10 }}
           {{- end }}
