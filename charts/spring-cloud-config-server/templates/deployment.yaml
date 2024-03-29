@@ -21,7 +21,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
     {{- end }}
-    {{- if or .Values.secrets.githubPrivateKey (not .Values.secrets.enabled) }}
+    {{- if .Values.secrets.githubPrivateKey }}
       volumes:
         - name: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
           secret:
@@ -32,7 +32,7 @@ spec:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- if or .Values.secrets.githubPrivateKey (not .Values.secrets.enabled) }}
+          {{- if .Values.secrets.githubPrivateKey }}
           volumeMounts:
             - name: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
               readOnly: true
@@ -54,8 +54,6 @@ spec:
           {{- if .Values.config.gitUri }}
           - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
             value: "{{ .Values.config.gitUri }}"
-          - name: SPRING_CLOUD_CONFIG_SERVER_STRICT_HOST_KEY_CHECKING
-            value: "false"
           {{- else }}
           - name: SPRING_PROFILES_ACTIVE
             value: "native"
