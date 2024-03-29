@@ -55,6 +55,8 @@ spec:
           - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
             value: "{{ .Values.config.gitUri }}"
           {{- else }}
+          - name: SPRING_CLOUD_CONFIG_SERVER_STRICT_HOST_KEY_CHECKING
+            value: false
           - name: SPRING_PROFILES_ACTIVE
             value: "native"
           {{- end}}
