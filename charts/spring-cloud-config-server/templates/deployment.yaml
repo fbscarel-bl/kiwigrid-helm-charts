@@ -29,14 +29,14 @@ spec:
             items:
             - key: id_rsa
               path: id_rsa
-            defaultMode: 256  # 0400 in octal
+            defaultMode: 0600
         - name: known-hosts
           secret:
             secretName: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
             items:
             - key: known_hosts
               path: known_hosts
-            defaultMode: 256  # 0400 in octal
+            defaultMode: 0600
     {{- end }}
       containers:
         - name: {{ .Chart.Name }}
