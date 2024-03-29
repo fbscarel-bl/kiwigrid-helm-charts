@@ -23,19 +23,9 @@ spec:
     {{- end }}
     {{- if or .Values.secrets.githubPrivateKey (not .Values.secrets.enabled) }}
       volumes:
-        - name: github-ssh-key
+        - name: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
           secret:
             secretName: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
-            items:
-            - key: id_rsa
-              path: id_rsa
-            defaultMode: 0600
-        - name: known-hosts
-          secret:
-            secretName: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
-            items:
-            - key: known_hosts
-              path: known_hosts
             defaultMode: 0600
     {{- end }}
       containers:
@@ -44,14 +34,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- if or .Values.secrets.githubPrivateKey (not .Values.secrets.enabled) }}
           volumeMounts:
-            - name: github-ssh-key
-              mountPath: /root/.ssh/id_rsa
-              subPath: id_rsa
+            - name: {{ include "spring-cloud-config-server.fullname" . }}-githubprivatekey
               readOnly: true
-            - name: known-hosts
-              mountPath: /root/.ssh/known_hosts
-              subPath: known_hosts
-              readOnly: true
+              mountPath: "/root/.ssh/"
           {{- end }}
           ports:
             - name: http
