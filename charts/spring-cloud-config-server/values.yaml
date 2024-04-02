@@ -61,9 +61,9 @@ secrets:
   enabled: true
   gitUsername: ""
   gitPassword: ""
-# encryptKeyName: ""
-
 # Github deploy key auth method. Base64 coded known_hosts and private key.
 # githubKnownHosts: ""
 # githubPrivateKey: ""
 
+# Key name in prepopulated "spring-cloud-config-server.fullname" secret to use as encryption key
+# encryptKeyName: ""
