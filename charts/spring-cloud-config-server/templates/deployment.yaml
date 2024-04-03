@@ -51,6 +51,12 @@ spec:
               path: /actuator/health
               port: http
           env:
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_CLONE_ON_START
+            value: "{{ .Values.config.gitCloneOnStart }}"
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_FORCE_PULL
+            value: "{{ .Values.config.gitForcePull }}"
+          - name: SPRING_CLOUD_CONFIG_SERVER_GIT_REFRESH_RATE
+            value: "{{ .Values.config.gitRefreshRate }}"
           {{- if .Values.config.gitUri }}
           - name: SPRING_CLOUD_CONFIG_SERVER_GIT_URI
             value: "{{ .Values.config.gitUri }}"

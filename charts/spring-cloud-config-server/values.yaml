@@ -56,6 +56,9 @@ extraEnv: []
 config:
   gitUri: ""
   gitSearchpath: "{application}"
+  gitCloneOnStart: true
+  gitForcePull: true
+  gitRefreshRate: 60
 
 secrets:
   enabled: true
